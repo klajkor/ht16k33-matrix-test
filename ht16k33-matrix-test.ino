@@ -223,6 +223,8 @@ void Draw_Faces(void) {
 void Adafruit_Text_Display_Test() {
   int8_t x,y;
   matrix.setRotation(0);
+  matrix.setTextSize(1);
+  matrix.setTextWrap(false);
   Serial.println(F("Scrolling, rotation=0"));
   matrix.setTextColor(LED_ON);
   for (y=0; y<=1; y++) {
@@ -236,8 +238,6 @@ void Adafruit_Text_Display_Test() {
   }
   delay(2000);
   Serial.println(F("Scrolling, rotation=1"));
-  matrix.setTextSize(1);
-  matrix.setTextWrap(false);
   matrix.setTextColor(LED_ON);
   matrix.setRotation(1);
   for (y=0; y<=1; y++) {
@@ -260,8 +260,9 @@ void Line_test(void) {
   delay(500);
   for (rotation=0; rotation<=3; rotation++) {
     matrix.setRotation(rotation);
-    for (y=0; y<=7; y++) {
-      matrix.clear();
+    matrix.clear();
+    matrix.writeDisplay();
+    for (y=0; y<=8; y++) {
       Serial.print(F("Rotation: "));
       Serial.print(rotation);
       Serial.print(F(" "));
@@ -272,9 +273,14 @@ void Line_test(void) {
       for (x=0; x<=7; x++) {
         Serial.print(x);
         Serial.print(F(" "));
-        matrix.drawPixel(x, y, LED_ON);
+        if (y<8) {
+          matrix.drawPixel(x, y, LED_ON);
+        }
+        if (y>0) {
+          matrix.drawPixel(x, y-1, LED_OFF);
+        }
         matrix.writeDisplay();
-        delay(300);
+        delay(100);
       }
       Serial.println(F(" "));
     }
