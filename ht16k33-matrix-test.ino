@@ -10,7 +10,7 @@
 #include <Fonts/Picopixel.h>
 
 
-// X mirror test start
+// X mirror class start
 #ifndef _swap_int16_t
 #define _swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
 #endif
@@ -51,25 +51,16 @@ void Adafruit_X_Mirrored_8x8matrix::drawPixel(int16_t x, int16_t y, uint16_t col
 
   x = 8 - x - 1; // X pixel mirrored
 
-  /**
-  // wrap around the x
-  x += 7;
-  x %= 8;
-  */
-
-  if (color) {
+    if (color) {
     displaybuffer[y] |= 1 << x;
   } else {
     displaybuffer[y] &= ~(1 << x);
   }
 }
 
-// X mirror test end
+// X mirror class end
 
 // define Adafruit library class
-//Adafruit_8x16minimatrix matrix = Adafruit_8x16minimatrix();
-//Adafruit_8x16minimatrix matrix = Adafruit_8x16minimatrix();
-//Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
 Adafruit_X_Mirrored_8x8matrix matrix = Adafruit_X_Mirrored_8x8matrix();
 
 
@@ -156,7 +147,7 @@ void Adafruit_Ht_Matrix_init() {
 /****************************************************************/
 void setup() {
   Serial.begin(115200);
-  // First let's do a quick scn on the I2C bus
+  // First let's do a quick scan on the I2C bus
   I2c_Scanner();
   Ht16k33_Init();
   Adafruit_Ht_Matrix_init();
@@ -265,11 +256,7 @@ void Adafruit_Text_Display_Test() {
 void Line_test(void) {
   int8_t x,y,rotation;
   matrix.clear();
-  matrix.setRotation(1);
-  matrix.drawLine(0,0, 0,5, LED_ON);
-  matrix.drawLine(2,0, 2,1, LED_ON);
-  matrix.drawLine(4,-1, 4,0, LED_ON);
-  matrix.writeDisplay();  // write the changes we just made to the display
+  matrix.writeDisplay();
   delay(500);
   for (rotation=0; rotation<=3; rotation++) {
     matrix.setRotation(rotation);
