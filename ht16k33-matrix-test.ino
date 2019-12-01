@@ -49,6 +49,12 @@ void I2c_Scanner(void) {
   
 }
 
+void Ht16k33_Init(void) {
+  HT.begin(0x70);
+  HT.setBrightness(5);
+  HT.clearAll();
+}
+
 /****************************************************************/
 void setup() {
   Serial.begin(115200);
@@ -56,48 +62,60 @@ void setup() {
   I2c_Scanner();
   Serial.println(F("ht16k33 light test v0.01"));
   Serial.println();
-  // initialize everything, 0x00 is the i2c address for the first one (0x70 is added in the class).
-  HT.begin(0x70);
-  HT.setBrightness(5);
-  HT.clearAll();
-  
 }
 
-/****************************************************************/
-void loop() {
+void Gradually_Turning_On_All_Leds(void) {
   uint8_t led;
-
-  Serial.println(F("Turn on all LEDs"));
-  // first light up all LEDs
+  Serial.println(F("Turning on all 16x8 LEDs"));
   for (led=0; led<128; led++) {
     
     HT.setLedNow(led);
-    delay(30);
-  } // for led
-  delay(2000);
+    delay(20);
+  }
+  Serial.println(F("All LEDs are on"));
+}
+
+void Brightness_Test(void) {
+  uint8_t led;
+  Serial.println(F("Brightness test"));
   for (led=0; led<16; led++) {
     HT.setBrightness(led);  
     delay(500);
   }
-  delay(2000);
   HT.setBrightness(5);
+}
+
+void Gradually_Turning_Off_All_Leds(void) {
+  uint8_t led;
   Serial.println(F("Clear all LEDs"));
-  //Next clear them
   for (led=0; led<128; led++) {
     HT.clearLedNow(led);
     delay(20);
-  } // for led
-  delay(2000);
-  //Now do one by one, slowly, and print out which one
+  }
+  Serial.println(F("All LEDs are off"));
+}
+
+void Led_Test_One_By_One(void) {
+  uint8_t led;
   for (led=0; led<128; led++) {
-    
     HT.setLedNow(led);
     Serial.print(F("Led no "));
     Serial.print(led,DEC);
     Serial.print(F(": On"));
-    delay(400);
+    delay(333);
     HT.clearLedNow(led);
     Serial.println(F(" Off"));
-  } // for led
-} // loop  
+  }
+}
+
+/****************************************************************/
+void loop() {
+  Gradually_Turning_On_All_Leds();
+  delay(2000);
+  Brightness_Test();
+  delay(2000);
+  Gradually_Turning_Off_All_Leds();
+  delay(2000);
+  Led_Test_One_By_One();
+}
     
