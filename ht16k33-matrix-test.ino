@@ -2,23 +2,13 @@
  * Simple test of ht16k33 library turning on and off LEDs
  */
 
-<<<<<<< HEAD
 #include "Wire.h"
-=======
-#include <Wire.h>
->>>>>>> 6ba1dc8460ee15c6fb3181a96e1e628f4e71fc2e
 #include "ht16k33.h"
 
 // Define the class
 HT16K33 HT;
 
-<<<<<<< HEAD
 void I2c_Scanner(void) {
-=======
-/****************************************************************/
-void setup() {
-  Serial.begin(115200);
->>>>>>> 6ba1dc8460ee15c6fb3181a96e1e628f4e71fc2e
   byte error, address;
   int nDevices;
 
@@ -55,7 +45,6 @@ void setup() {
     Serial.println("No I2C devices found\n");
   else
     Serial.println("done\n");
-<<<<<<< HEAD
   delay(2000); 
   
 }
@@ -65,10 +54,6 @@ void setup() {
   Serial.begin(115200);
   // First let's do a quick scn on the I2C bus
   I2c_Scanner();
-=======
-
-  delay(2000);           // wait 5 seconds for next scan
->>>>>>> 6ba1dc8460ee15c6fb3181a96e1e628f4e71fc2e
   Serial.println(F("ht16k33 light test v0.01"));
   Serial.println();
   // initialize everything, 0x00 is the i2c address for the first one (0x70 is added in the class).
