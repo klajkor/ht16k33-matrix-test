@@ -1,6 +1,6 @@
-/****************************************************************
- * Simple test of ht16k33 library turning on and off LEDs
- */
+/**
+* Testing HT16K33 I2C LED driver with 8x8 or 8x16 LED matrix
+*/
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -10,7 +10,7 @@
 #include <Fonts/Picopixel.h>
 
 
-// X mirror class start
+// X mirror class start - this is required becuase of different wiring of LED matrix
 #ifndef _swap_int16_t
 #define _swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
 #endif
